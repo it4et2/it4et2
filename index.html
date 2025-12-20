@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Splodgy & Willow's World</title>
+    <style>
+        /* Modern Pet Theme Styling */
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #fefaf3;
+            color: #443e3a;
+        }
+
+        header {
+            background: #ff9f43;
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        h1 { margin: 0; font-size: 2.5rem; }
+        
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+
+        /* Pet Profiles Grid */
+        .pet-grid {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .pet-card {
+            background: white;
+            border-radius: 15px;
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .pet-photo-main {
+            width: 180px;
+            height: 180px;
+            background-color: #ddd;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            overflow: hidden;
+            border: 5px solid #ff9f43;
+        }
+
+        .pet-photo-main img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* --- GALLERY SECTION STYLES --- */
+        .gallery-title {
+            text-align: center;
+            margin-top: 4rem;
+            font-size: 2rem;
+            color: #ff9f43;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .gallery-item {
+            height: 200px;
+            background-color: #eee;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            background: #443e3a;
+            color: white;
+        }
+
+        @media (max-width: 600px) {
+            .pet-card { min-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🐾 Splodgy & Willow 🐾</h1>
+        <p>The best cat and dog in the world!</p>
+    </header>
+
+    <div class="container">
+        <div class="pet-grid">
+            <div class="pet-card">
+                <div class="pet-photo-main" style="border-color: #54a0ff;">
+                    <img src="https://placehold.co/200x200?text=Splodgy" alt="Splodgy">
+                </div>
+                <h2>Splodgy</h2>
+                <p>The Master of Naptime.</p>
+            </div>
+
+            <div class="pet-card">
+                <div class="pet-photo-main" style="border-color: #1dd1a1;">
+                    <img src="https://placehold.co/200x200?text=Willow" alt="Willow">
+                </div>
+                <h2>Willow</h2>
+                <p>The Happy Tail-Wagger.</p>
+            </div>
+        </div>
+
+        <hr>
+
+        <h2 class="gallery-title">The Adventures Gallery</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item"><img src="https://placehold.co/300x300?text=Splodgy+1" alt="Splodgy Photo 1"></div>
+            <div class="gallery-item"><img src="https://placehold.co/300x300?text=Willow+1" alt="Willow Photo 1"></div>
+            <div class="gallery-item"><img src="https://placehold.co/300x300?text=Splodgy+2" alt="Splodgy Photo 2"></div>
+            <div class="gallery-item"><img src="https://placehold.co/300x300?text=Willow+2" alt="Willow Photo 2"></div>
+            <div class="gallery-item"><img src="https://placehold.co/300x300?text=Both+Together" alt="Both Pets"></div>
+            <div class="gallery-item"><img src="https://placehold.co/300x300?text=Nap+Time" alt="Pets Sleeping"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Made with love for Splodgy & Willow &copy; 2025</p>
+    </footer>
+
+</body>
+</html>
