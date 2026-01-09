@@ -4,278 +4,410 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Splodgy & Willow's World</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
     <style>
-        /* --- 1. GENERAL PAGE STYLES --- */
-        body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #fefaf3; /* Soft cream */
-            color: #443e3a;
+        /* --- DESIGN SYSTEM & VARIABLES --- */
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --accent: #f43f5e;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --header-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            --radius: 20px;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            --border: rgba(0, 0, 0, 0.06);
         }
 
-        header {
-            background: #ff9f43; /* Warm orange */
-            color: white;
-            padding: 3rem 1rem;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        [data-theme="dark"] {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --header-gradient: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- BASE STYLES --- */
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            -webkit-font-smoothing: antialiased;
         }
 
         .container {
-            max-width: 1000px;
-            margin: 2rem auto;
-            padding: 0 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
         }
 
-        h1 { margin: 0; font-size: 2.5rem; }
-        h2 { color: #ff9f43; text-align: center; margin-top: 3rem; }
+        h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            letter-spacing: -0.5px;
+        }
 
-        /* --- 2. PET PROFILE CARDS --- */
-        .pet-grid {
+        section { margin-bottom: 6rem; }
+
+        /* --- HEADER --- */
+        header {
+            background: var(--header-gradient);
+            color: white;
+            padding: 6rem 1rem 8rem;
+            text-align: center;
+            position: relative;
+            clip-path: ellipse(150% 100% at 50% 0%);
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin: 0;
+            font-weight: 800;
+            letter-spacing: -2px;
+        }
+
+        header p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            font-weight: 300;
+            margin-top: 10px;
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            backdrop-filter: blur(12px);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
             display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-bottom: 3rem;
+            align-items: center;
+            gap: 8px;
+            z-index: 100;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        /* --- PROFILE CARDS --- */
+        .pet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 30px;
+            margin-top: -60px;
         }
 
         .pet-card {
-            background: white;
-            border-radius: 15px;
-            flex: 1;
-            min-width: 300px;
-            padding: 20px;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 40px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-
-        .pet-photo-main {
-            width: 180px;
-            height: 180px;
-            background-color: #ddd;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            overflow: hidden;
-            border: 5px solid #ff9f43;
-        }
-
-        .pet-photo-main img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* --- 3. PHOTO GALLERY STYLES --- */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .gallery-item {
-            height: 200px;
-            background-color: #eee;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
             transition: transform 0.3s ease;
         }
 
-        .gallery-item:hover {
-            transform: scale(1.05);
+        .pet-card:hover { transform: translateY(-10px); }
+
+        .photo-circle {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 25px;
+            border-radius: 50%;
+            padding: 5px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+        }
+
+        .photo-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid var(--card-bg);
+        }
+
+        .badge {
+            background: var(--bg);
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- GALLERY --- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1/1;
+            border-radius: var(--radius);
+            overflow: hidden;
+            cursor: zoom-in;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
         }
 
         .gallery-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* --- 4. MEDIA PLAYER STYLES --- */
-        .media-center {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            margin-top: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            text-align: center;
+        .gallery-item:hover img { transform: scale(1.1); }
+
+        /* --- MEDIA CARDS --- */
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(45%, 1fr));
+            gap: 25px;
+        }
+
+        .media-card {
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
         }
 
         video {
             width: 100%;
-            max-width: 600px;
-            border-radius: 10px;
-            border: 3px solid #1dd1a1;
+            border-radius: 12px;
+            background: #000;
         }
 
-        audio {
-            width: 100%;
-            max-width: 400px;
-            margin-top: 10px;
+        audio { width: 100%; margin-top: 15px; }
+
+        /* --- LIGHTBOX --- */
+        #lightbox {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            cursor: zoom-out;
+            padding: 40px;
         }
 
-        .media-label {
-            display: block;
-            font-weight: bold;
-            margin: 15px 0 5px 0;
+        #lightbox img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transform: scale(0.95);
+            transition: 0.3s ease;
         }
 
-        /* --- 5. DOWNLOAD BUTTON STYLES --- */
-        .download-section {
+        #lightbox.active { display: flex; }
+        #lightbox.active img { transform: scale(1); }
+
+        /* --- DOWNLOAD SECTION --- */
+        .download-zone {
+            background: var(--card-bg);
+            padding: 60px;
+            border-radius: var(--radius);
             text-align: center;
-            margin-top: 3rem;
-            padding: 20px;
-            background: #fff;
-            border-radius: 15px;
-            border: 2px dashed #ff9f43;
+            border: 2px dashed var(--border);
         }
 
-        .download-btn {
-            display: inline-block;
-            background-color: #ff9f43;
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            background: var(--primary);
             color: white;
-            padding: 12px 24px;
-            margin: 10px;
+            padding: 14px 28px;
             text-decoration: none;
-            border-radius: 25px;
-            font-weight: bold;
-            transition: background 0.3s;
+            border-radius: 12px;
+            font-weight: 600;
+            margin: 8px;
+            transition: 0.3s;
         }
 
-        .download-btn:hover {
-            background-color: #e67e22;
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3);
         }
 
         footer {
+            padding: 5rem 1rem;
             text-align: center;
-            padding: 2rem;
-            margin-top: 4rem;
-            background: #443e3a;
-            color: white;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
 
-        /* Mobile Adjustments */
-        @media (max-width: 600px) {
-            .pet-card { min-width: 100%; }
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.5rem; }
+            .pet-grid { grid-template-columns: 1fr; }
+            .media-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
-<body>
+<body data-theme="light">
 
     <header>
-        <h1>🐾 Splodgy & Willow 🐾</h1>
-        <p>Welcome to our online home!</p>
+        <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">
+            <span id="themeIcon">🌙</span> <span id="themeText">Dark Mode</span>
+        </button>
+        <div class="container">
+            <h1>Splodgy & Willow</h1>
+            <p>A modern diary of our favorite furry companions</p>
+        </div>
     </header>
 
     <div class="container">
         
-        <div class="pet-grid">
+        <section class="pet-grid">
             <div class="pet-card">
-                <div class="pet-photo-main" style="border-color: #54a0ff;">
-                    <img src="https://placehold.co/200x200?text=Splodgy" alt="Splodgy the Cat">
+                <div class="photo-circle">
+                    <img src="https://placehold.co/400x400?text=Splodgy" alt="Splodgy">
                 </div>
-                <h2>Splodgy</h2>
-                <p>The Master of the House</p>
-                <p>Splodgy loves napping in sunbeams and chasing invisible flies.</p>
+                <span class="badge">The Master</span>
+                <h3 style="font-size: 1.8rem; margin: 15px 0;">Splodgy</h3>
+                <p style="color: var(--text-muted)">Splodgy enjoys long naps in sunbeams and the occasional midnight zoomie session.</p>
             </div>
 
             <div class="pet-card">
-                <div class="pet-photo-main" style="border-color: #1dd1a1;">
-                    <img src="https://placehold.co/200x200?text=Willow" alt="Willow the Dog">
+                <div class="photo-circle">
+                    <img src="https://placehold.co/400x400?text=Willow" alt="Willow">
                 </div>
-                <h2>Willow</h2>
-                <p>The Professional Tail-Wagger</p>
-                <p>Willow is a world-class fetcher and a very good girl.</p>
+                <span class="badge">The Explorer</span>
+                <h3 style="font-size: 1.8rem; margin: 15px 0;">Willow</h3>
+                <p style="color: var(--text-muted)">A professional tail-wagger who believes that every walk is a grand adventure.</p>
             </div>
-        </div>
+        </section>
 
-        <hr>
-
-        <h2>The Adventures Gallery</h2>
-        <div class="gallery-grid">
-            <div class="gallery-item"><img src="1.jpg" alt="Splodgy Photo 1"></div>
-            <div class="gallery-item"><img src="Willow 1.jpg" alt="Willow Photo 1"></div>
-            <div class="gallery-item"><img src="2.jpg" alt="Splodgy Photo 2"></div>
-            <div class="gallery-item"><img src="Willow 2.jpg" alt="Willow Photo 2"></div>
-            <div class="gallery-item"><img src="Splodgy 4.jpg" alt="Both Pets"></div>
-            <div class="gallery-item"><img src="3.jpg" alt="Splodgy Photo"></div>            
-            <div class="gallery-item"><img src="Splodgy 1.jpg" alt="Splodgy Photo 1"></div>
-            <div class="gallery-item"><img src="Willow 1.jpg" alt="Willow Photo 1"></div>
-            <div class="gallery-item"><img src="Splodgy 2.jpg" alt="Splodgy Photo 2"></div>
-            <div class="gallery-item"><img src="Willow 2.jpg" alt="Willow Photo 2"></div>
-            <div class="gallery-item"><img src="Splodgy 4.jpg" alt="Both Pets"></div>
-            <div class="gallery-item"><img src="Willow 3.jpg" alt="Splodgy Photo"></div>
-        </div>
-
-        <hr>
-
-        <div class="media-center">
-            <h2>Watch & Listen 🎥</h2>
-            
-            <div class="video-container">
-                <span class="media-label">Cat Attack :</span>
-                <video controls>
-                    <source src="Cat Attack  - Trim.mp4" type="video/mp4">
-                    Browser not supported.
-                </video>
+        <section>
+            <h2>The Adventures Gallery</h2>
+            <div class="gallery-grid" id="mainGallery">
+                <div class="gallery-item"><img src="1.jpg" alt="Pet Adventure"></div>
+                <div class="gallery-item"><img src="Willow 1.jpg" alt="Pet Adventure"></div>
+                <div class="gallery-item"><img src="2.jpg" alt="Pet Adventure"></div>
+                <div class="gallery-item"><img src="Willow 2.jpg" alt="Pet Adventure"></div>
+                <div class="gallery-item"><img src="Splodgy 4.jpg" alt="Pet Adventure"></div>
+                <div class="gallery-item"><img src="3.jpg" alt="Pet Adventure"></div>
+                <div class="gallery-item"><img src="Splodgy 1.jpg" alt="Pet Adventure"></div>
+                <div class="gallery-item"><img src="Willow 3.jpg" alt="Pet Adventure"></div>
             </div>
+        </section>
 
-            <div class="audio-container">
-                <span class="media-label">Splodgy Purring:</span>
-                <audio controls>
-                    <source src="splodgy_purr.mp3" type="audio/mpeg">
-                    Browser not supported.
-                </audio>
+        <section>
+            <h2>Watch & Listen</h2>
+            <div class="media-grid">
+                <div class="media-card">
+                    <video controls><source src="cat-attack.mp4" type="video/mp4"></video>
+                    <p style="margin-top:15px;"><strong>Featured:</strong> The Great Cat Attack</p>
+                </div>
+                <div class="media-card">
+                    <video controls><source src="Cat-Scratchy .mp4" type="video/mp4"></video>
+                    <p style="margin-top:15px;"><strong>Daily Life:</strong> Scratching Post Rituals</p>
+                </div>
+                <div class="media-card">
+                    <audio controls><source src="splodgy_purr.mp3" type="audio/mpeg"></audio>
+                    <p><strong>ASMR:</strong> Splodgy's Deep Purr</p>
+                </div>
+                <div class="media-card">
+                    <video controls><source src="splodgy vid.mp4" type="video/mp4"></video>
+                    <p style="margin-top:15px;"><strong>Eating:</strong> Carrots are Delicious</p>
+                </div>
             </div>
-        </div>
- </div>
+        </section>
 
-        <hr>
-
-        <div class="media-center">
-            <h2>Watch & Listen 🎥</h2>
-            
-              <div class="video-container">
-                <span class="media-label">Splodgy Cat-Scratchy:</span>
-                <video controls>
-                    <source src="Cat-Scratchy .mp4" type="video/mp4">
-                    Browser not supported.
-                </video>
+        <section class="download-zone">
+            <h2>Media Collection</h2>
+            <p style="color: var(--text-muted); margin-bottom: 30px;">Download high-quality versions of our favorite moments.</p>
+            <div class="btn-group">
+                <a href="cat-attack.mp4" download class="btn">Download Video</a>
+                <a href="splodgy_purr.mp3" download class="btn">Download Audio</a>
             </div>
+        </section>
 
-            <div class="video-container">
-                <span class="media-label">Splodgy Loves Carrots :</span>
-                <video controls>
-                    <source src="splodgy vid.mp4" type="video/mp4">
-                    Browser not supported.
-                </video>
-            </div>
+    </div>
 
-            <div class="audio-container">
-                <span class="media-label">Splodgy Purring:</span>
-                <audio controls>
-                    <source src="splodgy_purr.mp3" type="audio/mpeg">
-                    Browser not supported.
-                </audio>
-            </div>
-        </div>
+    <div id="lightbox" onclick="this.classList.remove('active')">
+        <img id="lightboxImg" src="" alt="Zoomed view">
+    </div>
 
-
-
-        <div class="download-section">
-            <h3>Download Files 💾</h3>
-            <a href="Cat-Scratchy .mp4" download class="download-btn">Save Cat Attack Video</a>
-            <a href="splodgy vid.mp4" download class="download-btn">Save Cat Attack Video</a>
-            <a href="splodgy_purr.mp3" download class="download-btn">Save Splodgy's Purr</a>
-        </div>
-
-    </div> <footer>
-        <p>Made with love for Splodgy & Willow &copy; 2025</p>
+    <footer>
+        <p>Made with &hearts; for Splodgy & Willow &bull; 2026</p>
     </footer>
 
+    <script>
+        // --- DARK MODE LOGIC ---
+        function toggleTheme() {
+            const body = document.body;
+            const btnText = document.getElementById('themeText');
+            const btnIcon = document.getElementById('themeIcon');
+            const isDark = body.getAttribute('data-theme') === 'dark';
+            
+            const nextTheme = isDark ? 'light' : 'dark';
+            body.setAttribute('data-theme', nextTheme);
+            localStorage.setItem('theme-pref', nextTheme);
+            
+            btnText.innerText = isDark ? 'Dark Mode' : 'Light Mode';
+            btnIcon.innerText = isDark ? '🌙' : '☀️';
+        }
+
+        // Apply saved theme on load
+        const savedTheme = localStorage.getItem('theme-pref');
+        if (savedTheme === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+            document.getElementById('themeText').innerText = 'Light Mode';
+            document.getElementById('themeIcon').innerText = '☀️';
+        }
+
+        // --- LIGHTBOX LOGIC ---
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const images = document.querySelectorAll('.gallery-item img');
+
+        images.forEach(img => {
+            img.onclick = (e) => {
+                e.stopPropagation();
+                lightboxImg.src = img.src;
+                lightbox.classList.add('active');
+            };
+        });
+
+        // Close on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') lightbox.classList.remove('active');
+        });
+    </script>
 </body>
 </html>
-
